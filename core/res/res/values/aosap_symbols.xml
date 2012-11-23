@@ -26,4 +26,6 @@
 
   <!-- Post reset runnable for all clients -->
   <java-symbol type="bool" name="config_fingerprintPostResetRunnableForAllClients" />
+
+    <java-symbol type="integer" name="config_buttonBrightnessSettingDefault" />
 </resources>
