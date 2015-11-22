@@ -223,4 +223,8 @@
   <!-- Whether device has VOOC charging support -->
   <java-symbol type="bool" name="config_hasVoocCharger" />
 
+  <!-- Older rotation sensors are not setting event.timestamp correctly. Setting to
+      true will use SystemClock.elapsedRealtimeNanos() to set timestamp. -->
+  <java-symbol type="bool" name="config_useSystemClockforRotationSensor" />
+
 </resources>
