@@ -62,7 +62,7 @@ import com.android.systemui.statusbar.policy.NetworkController.SignalCallback;
 import com.android.systemui.statusbar.policy.NetworkControllerImpl.Config;
 import com.android.systemui.statusbar.policy.NetworkControllerImpl.SubscriptionDefaults;
 import com.android.systemui.tuner.TunerService;
-
+import com.android.systemui.Dependency;
 
 import java.io.PrintWriter;
 import java.util.BitSet;
@@ -108,6 +108,7 @@ public class MobileSignalController extends SignalController<
     private int mCallState = TelephonyManager.CALL_STATE_IDLE;
 
     private boolean mDataDisabledIcon;
+    private boolean mRoamingIconAllowed;
 
     // 4G instead of LTE
     private int mShow4GUserConfig;
@@ -124,6 +125,8 @@ public class MobileSignalController extends SignalController<
 
     private static final String DATA_DISABLED_ICON =
             "system:" + Settings.System.DATA_DISABLED_ICON;
+    private static final String ROAMING_INDICATOR_ICON =
+            "system:" + Settings.System.ROAMING_INDICATOR_ICON;
 
     // TODO: Reduce number of vars passed in, if we have the NetworkController, probably don't
     // need listener lists anymore.
@@ -186,6 +189,9 @@ public class MobileSignalController extends SignalController<
             }
         };
 
+        Dependency.get(TunerService.class).addTunable(this, DATA_DISABLED_ICON);
+        Dependency.get(TunerService.class).addTunable(this, ROAMING_INDICATOR_ICON);
+
         Handler mHandler = new Handler();
         SettingsObserver settingsObserver = new SettingsObserver(mHandler);
         settingsObserver.observe();
@@ -225,6 +231,7 @@ public class MobileSignalController extends SignalController<
         }
     }
 
+
     private void updateSettings() {
         ContentResolver resolver = mContext.getContentResolver();
         mShow4GUserConfig = Settings.System.getIntForUser(resolver,
@@ -249,8 +256,6 @@ public class MobileSignalController extends SignalController<
         notifyListeners();
     }
 
-        Dependency.get(TunerService.class).addTunable(this, DATA_DISABLED_ICON);
-
     @Override
     public void onTuningChanged(String key, String newValue) {
         switch (key) {
@@ -259,6 +264,11 @@ public class MobileSignalController extends SignalController<
                     TunerService.parseIntegerSwitch(newValue, true);
                 updateTelephony();                
                 break; 
+            case ROAMING_INDICATOR_ICON:
+                mRoamingIconAllowed =
+                    TunerService.parseIntegerSwitch(newValue, true);
+                updateTelephony();
+                break;
         }
     }
 
@@ -803,7 +813,7 @@ public class MobileSignalController extends SignalController<
         mCurrentState.dataConnected = mCurrentState.connected
                 && mDataState == TelephonyManager.DATA_CONNECTED;
 
-        mCurrentState.roaming = isRoaming();
+        mCurrentState.roaming = isRoaming() && mRoamingIconAllowed;
         if (isCarrierNetworkChangeActive()) {
             mCurrentState.iconGroup = TelephonyIcons.CARRIER_NETWORK_CHANGE;
         } else if (isDataDisabled() && mDataDisabledIcon) {
