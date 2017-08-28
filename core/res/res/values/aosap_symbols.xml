@@ -45,10 +45,16 @@
   <!-- Fastscroller -->
   <java-symbol type="color" name="fastscroller_text_color" />
 
-
   <!-- Forcefully tint notification icon text -->
   <java-symbol type="bool" name="config_useDarkBgNotificationIconTextTinting" />
   <java-symbol type="bool" name="config_useDarkBgNotificationTinting_override" />
   <java-symbol type="bool" name="config_notificationTinting_override" />
+
+  <java-symbol type="string" name="reboot_to_recovery_title" />
+  <java-symbol type="string" name="reboot_to_recovery_message" />
+  <java-symbol type="string" name="reboot_to_bootloader_title" />
+  <java-symbol type="string" name="reboot_to_bootloader_message" />
+  <java-symbol type="string" name="reboot_title" />
+  <java-symbol type="string" name="reboot_message" />
 
 </resources>
