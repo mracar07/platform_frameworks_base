@@ -44,6 +44,7 @@ import com.android.systemui.qs.tiles.WifiTile;
 import com.android.systemui.qs.tiles.WorkModeTile;
 import com.android.systemui.qs.QSTileHost;
 import com.android.systemui.util.leak.GarbageMonitor;
+import com.android.systemui.qs.tiles.ScreenshotTile;
 
 public class QSFactoryImpl implements QSFactory {
 
@@ -101,6 +102,8 @@ public class QSFactoryImpl implements QSFactory {
                 return new NfcTile(mHost);
             case "theme":
                 return new ThemeTile(mHost);
+            case "screenshot":
+                return new ScreenshotTile(mHost);
         }
 
         // Intent tiles.
