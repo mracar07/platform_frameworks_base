@@ -68,6 +68,8 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
     private View mOperatorNameFrame;
     private CommandQueue mCommandQueue;
 
+    private View mBatteryBar;
+
     private SignalCallback mSignalCallback = new SignalCallback() {
         @Override
         public void setIsAirplaneMode(NetworkController.IconState icon) {
@@ -104,6 +106,7 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
         mDarkIconManager.setShouldLog(true);
         Dependency.get(StatusBarIconController.class).addIconGroup(mDarkIconManager);
         mSystemIconArea = mStatusBar.findViewById(R.id.system_icon_area);
+        mBatteryBar = mStatusBar.findViewById(R.id.battery_bar);
         mClockView = mStatusBar.findViewById(R.id.clock);
         showSystemIconArea(false);
         showClock(false);
@@ -248,10 +251,12 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
     }
 
     public void hideSystemIconArea(boolean animate) {
+        animateHide(mBatteryBar, animate);
         animateHide(mSystemIconArea, animate);
     }
 
     public void showSystemIconArea(boolean animate) {
+        animateShow(mBatteryBar, animate);
         animateShow(mSystemIconArea, animate);
     }
 
