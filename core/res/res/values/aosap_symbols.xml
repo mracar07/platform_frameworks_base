@@ -32,4 +32,7 @@
   <java-symbol type="string" name="reboot_title" />
   <java-symbol type="string" name="reboot_message" />
 
+  <!-- Seconds after which power button torch times out when proximity sensor is covered -->
+  <java-symbol type="integer" name="config_flashlightProximityTimeout" />
+
 </resources>
