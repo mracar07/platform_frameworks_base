@@ -442,4 +442,9 @@ interface IWindowManager
      */
     void dontOverrideDisplayInfo(int displayId);
 
+    /**
+     * Call screen record from WindowManager.
+     */
+    void screenRecordAction(int mode);
+
 }

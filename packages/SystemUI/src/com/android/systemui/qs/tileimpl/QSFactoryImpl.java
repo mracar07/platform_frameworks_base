@@ -45,6 +45,7 @@ import com.android.systemui.qs.tiles.WorkModeTile;
 import com.android.systemui.qs.QSTileHost;
 import com.android.systemui.util.leak.GarbageMonitor;
 import com.android.systemui.qs.tiles.ScreenshotTile;
+import com.android.systemui.qs.tiles.ScreenrecordTile;
 
 public class QSFactoryImpl implements QSFactory {
 
@@ -104,6 +105,8 @@ public class QSFactoryImpl implements QSFactory {
                 return new ThemeTile(mHost);
             case "screenshot":
                 return new ScreenshotTile(mHost);
+            case "screenrecord":
+                return new ScreenrecordTile(mHost);
         }
 
         // Intent tiles.
