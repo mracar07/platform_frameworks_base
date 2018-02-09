@@ -46,6 +46,7 @@ import com.android.systemui.qs.QSTileHost;
 import com.android.systemui.util.leak.GarbageMonitor;
 import com.android.systemui.qs.tiles.ScreenshotTile;
 import com.android.systemui.qs.tiles.ScreenrecordTile;
+import com.android.systemui.qs.tiles.SoundSearchTIle;
 
 public class QSFactoryImpl implements QSFactory {
 
@@ -107,6 +108,8 @@ public class QSFactoryImpl implements QSFactory {
                 return new ScreenshotTile(mHost);
             case "screenrecord":
                 return new ScreenrecordTile(mHost);
+            case "soundsearch":
+                return new SoundSearchTIle(mHost);
         }
 
         // Intent tiles.
