@@ -232,4 +232,7 @@ oneway interface IStatusBar
      * Camera flash toggle
      */
     void toggleCameraFlash();
+
+    void toggleCameraFlashOn();
+    void toggleCameraFlashOff();
 }

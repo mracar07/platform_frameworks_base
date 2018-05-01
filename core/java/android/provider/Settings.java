@@ -4990,6 +4990,17 @@ public final class Settings {
         public static final String FINGERPRINT_SUCCESS_VIB = "fingerprint_success_vib";
 
         /**
+         * @hide
+         */
+        public static final String FLASH_ON_CALL_WAITING = "flash_on_call_waiting";
+
+        /**
+         * @hide
+         */
+        public static final String FLASH_ON_CALLWAITING_DELAY = "flash_on_call_waiting_delay";
+
+
+        /**
          * IMPORTANT: If you add a new public settings you also have to add it to
          * PUBLIC_SETTINGS below. If the new setting is hidden you have to add
          * it to PRIVATE_SETTINGS below. Also add a validator that can validate
