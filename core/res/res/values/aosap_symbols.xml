@@ -227,4 +227,9 @@
       true will use SystemClock.elapsedRealtimeNanos() to set timestamp. -->
   <java-symbol type="bool" name="config_useSystemClockforRotationSensor" />
 
+  <!-- Alert Slider -->
+  <java-symbol type="string" name="alert_slider_state_path" />
+  <java-symbol type="string" name="alert_slider_uevent_match_path" />
+  <java-symbol type="bool" name="config_hasAlertSlider" />
+
 </resources>
