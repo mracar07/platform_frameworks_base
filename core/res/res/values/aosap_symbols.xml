@@ -14,8 +14,15 @@
      limitations under the License.
 -->
 <resources>
+
+    <!-- App error dialog -->
+    <java-symbol type="id" name="aerr_copy" />
+    <java-symbol type="string" name="url_copy_success" />
+    <java-symbol type="string" name="url_copy_failed" />
+
     <!-- Rotation sensor -->
     <java-symbol type="bool" name="config_useSystemClockforRotationSensor" />
 
     <java-symbol type="array" name="config_vendorPlatformSignatures" />
+
 </resources>
