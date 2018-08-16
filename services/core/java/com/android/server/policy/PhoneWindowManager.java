@@ -886,6 +886,9 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             resolver.registerContentObserver(Settings.Secure.getUriFor(
                     Settings.Secure.POWER_MENU_HIDE_ON_SECURE), false, this,
                     UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.FORCE_SHOW_NAVBAR), false, this,
+                    UserHandle.USER_ALL);
             updateSettings();
         }
 
@@ -2335,6 +2338,8 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             mHideGlobalActionsOnSecure = Settings.Secure.getIntForUser(resolver,
                     Settings.Secure.POWER_MENU_HIDE_ON_SECURE,
                             0, UserHandle.USER_CURRENT) != 0;
+
+            mDefaultDisplayPolicy.updatehasNavigationBar();
         }
         if (updateRotation) {
             updateRotation(true);
