@@ -68,4 +68,7 @@
   <!-- In call notification vibration strength -->
   <java-symbol type="integer" name="config_in_call_notification_vibration_strength" />
 
+  <!-- Whether or not swipe up gesture's opt-in setting is available on this device -->
+  <java-symbol type="bool" name="config_custom_swipe_up_gesture_setting_available" />
+
 </resources>
