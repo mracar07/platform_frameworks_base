@@ -5160,6 +5160,8 @@ public final class Settings {
          */
         public static final String GLOBAL_ACTIONS_SCREENRECORD = "global_actions_screenrecord";
 
+
+
         /**
          * Whether to display settings in the power menu
          *
@@ -5243,6 +5245,18 @@ public final class Settings {
          * @hide
          */
         public static final String OMNIJAWS_WEATHER_ICON_PACK = "omnijaws_weather_icon_pack";
+
+         /**
+         * Wheter to show network traffic indicator in statusbar
+         * @hide
+         */
+        public static final String NETWORK_TRAFFIC_STATE = "network_traffic_state";
+
+        /**
+         * Network traffic inactivity threshold (default is 1 kBs)
+         * @hide
+         */
+        public static final String NETWORK_TRAFFIC_AUTOHIDE_THRESHOLD = "network_traffic_autohide_threshold";
 
         /**
          * @hide
