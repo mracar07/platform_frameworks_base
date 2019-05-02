@@ -4280,18 +4280,6 @@ public final class Settings {
         public static final String RECENTS_ICON_PACK = "recents_icon_pack";
 
         /**
-         * Display style of the status bar battery information
-         * 0: Display the battery an icon in portrait mode
-         * 2: Display the battery as a circle
-         * 3: Display the battery as a dotted circle
-         * 5: Display the battery as text
-         * 6: Do not display the battery
-         * default: 0
-         * @hide
-         */
-        public static final String STATUS_BAR_BATTERY_STYLE = "status_bar_battery_style";
-
-        /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          *
@@ -8149,6 +8137,18 @@ public final class Settings {
          */
         public static final String PACKAGES_TO_CLEAR_DATA_BEFORE_FULL_RESTORE =
                 "packages_to_clear_data_before_full_restore";
+
+        /**
+         * Display style of the status bar battery information
+         * 0: Display the battery an icon in portrait mode
+         * 2: Display the battery as a circle
+         * 3: Display the battery as a dotted circle
+         * 5: Display the battery as text
+         * 6: Do not display the battery
+         * default: 0
+         * @hide
+         */
+	public static final String STATUS_BAR_BATTERY_STYLE = "status_bar_battery_style";
 
         /**
          * This are the settings to be backed up.
