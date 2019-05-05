@@ -32,7 +32,6 @@ import android.content.res.TypedArray;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Parcelable;
 import android.os.SystemClock;
 import android.os.UserHandle;
 import android.text.Spannable;
@@ -85,7 +84,6 @@ public class Clock extends TextView implements DemoMode, Tunable, CommandQueue.C
     private SimpleDateFormat mClockFormat;
     private SimpleDateFormat mContentDescriptionFormat;
     private Locale mLocale;
-    private boolean mScreenOn = true;
 
     public static final int AM_PM_STYLE_GONE    = 0;
     public static final int AM_PM_STYLE_SMALL   = 1;
@@ -153,40 +151,6 @@ public class Clock extends TextView implements DemoMode, Tunable, CommandQueue.C
     }
 
     @Override
-    public Parcelable onSaveInstanceState() {
-        Bundle bundle = new Bundle();
-        bundle.putParcelable(CLOCK_SUPER_PARCELABLE, super.onSaveInstanceState());
-        bundle.putInt(CURRENT_USER_ID, mCurrentUserId);
-        bundle.putBoolean(VISIBLE_BY_POLICY, mClockVisibleByPolicy);
-        bundle.putBoolean(VISIBLE_BY_USER, mClockVisibleByUser);
-        bundle.putBoolean(SHOW_SECONDS, mShowSeconds);
-        bundle.putInt(VISIBILITY, getVisibility());
-
-        return bundle;
-    }
-
-    @Override
-    public void onRestoreInstanceState(Parcelable state) {
-        if (state == null || !(state instanceof Bundle)) {
-            super.onRestoreInstanceState(state);
-            return;
-        }
-
-        Bundle bundle = (Bundle) state;
-        Parcelable superState = bundle.getParcelable(CLOCK_SUPER_PARCELABLE);
-        super.onRestoreInstanceState(superState);
-        if (bundle.containsKey(CURRENT_USER_ID)) {
-            mCurrentUserId = bundle.getInt(CURRENT_USER_ID);
-        }
-        mClockVisibleByPolicy = bundle.getBoolean(VISIBLE_BY_POLICY, true);
-        mClockVisibleByUser = bundle.getBoolean(VISIBLE_BY_USER, true);
-        mShowSeconds = bundle.getBoolean(SHOW_SECONDS, false);
-        if (bundle.containsKey(VISIBILITY)) {
-            setVisibility(bundle.getInt(VISIBILITY));
-        }
-    }
-
-    @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
 
@@ -199,8 +163,6 @@ public class Clock extends TextView implements DemoMode, Tunable, CommandQueue.C
             filter.addAction(Intent.ACTION_TIMEZONE_CHANGED);
             filter.addAction(Intent.ACTION_CONFIGURATION_CHANGED);
             filter.addAction(Intent.ACTION_USER_SWITCHED);
-            filter.addAction(Intent.ACTION_SCREEN_ON);
-            filter.addAction(Intent.ACTION_SCREEN_OFF);
 
             getContext().registerReceiverAsUser(mIntentReceiver, UserHandle.ALL, filter,
                     null, Dependency.get(Dependency.TIME_TICK_HANDLER));
@@ -262,16 +224,7 @@ public class Clock extends TextView implements DemoMode, Tunable, CommandQueue.C
                     }
                 });
             }
-
-            if (action.equals(Intent.ACTION_SCREEN_ON)) {
-                mScreenOn = true;
-            } else if (action.equals(Intent.ACTION_SCREEN_OFF)) {
-                mScreenOn = false;
-            }
-
-            if (mScreenOn) {
-                getHandler().post(() -> updateClock());
-            }
+            getHandler().post(() -> updateClock());
         }
     };
 
@@ -570,4 +523,5 @@ public class Clock extends TextView implements DemoMode, Tunable, CommandQueue.C
         mQsHeader = true;
     }
 }
+
 
