@@ -38,6 +38,7 @@ import com.android.systemui.qs.tiles.DataSwitchTile;
 import com.android.systemui.qs.tiles.DndTile;
 import com.android.systemui.qs.tiles.FlashlightTile;
 import com.android.systemui.qs.tiles.HeadsUpTile;
+import com.android.systemui.qs.tiles.GamingModeTile;
 import com.android.systemui.qs.tiles.HotspotTile;
 import com.android.systemui.qs.tiles.HWKeysTile;
 import com.android.systemui.qs.tiles.LiveDisplayTile;
@@ -104,6 +105,7 @@ public class QSFactoryImpl implements QSFactory {
     private final Provider<DataSwitchTile> mDataSwitchTileProvider;
     private final Provider<WeatherTile> mWeatherTileProvider;
     private final Provider<VolumeTile> mVolumeTileProvider;
+    private final Provider<GamingModeTile> mGamingModeTileProvider;
 
     private final Lazy<QSHost> mQsHostLazy;
 
@@ -141,7 +143,8 @@ public class QSFactoryImpl implements QSFactory {
             Provider<ReadingModeTile> readingModeTileProvider,
             Provider<DataSwitchTile> dataSwitchTileProvider,
             Provider<VolumeTile> volumeTileProvider,
-            Provider<WeatherTile> weatherTileProvider) {
+            Provider<WeatherTile> weatherTileProvider,
+            Provider<GamingModeTile> gamingModeTileProvider) {
         mQsHostLazy = qsHostLazy;
         mWifiTileProvider = wifiTileProvider;
         mBluetoothTileProvider = bluetoothTileProvider;
@@ -176,6 +179,7 @@ public class QSFactoryImpl implements QSFactory {
         mDataSwitchTileProvider = dataSwitchTileProvider;
         mWeatherTileProvider = weatherTileProvider;
         mVolumeTileProvider = volumeTileProvider;
+        mGamingModeTileProvider = gamingModeTileProvider;
     }
 
     public QSTile createTile(String tileSpec) {
@@ -253,6 +257,8 @@ public class QSFactoryImpl implements QSFactory {
                 return mWeatherTileProvider.get();
             case "volume_panel":
                 return mVolumeTileProvider.get();
+            case "gaming":
+                return mGamingModeTileProvider.get();
         }
 
         // Custom tiles
