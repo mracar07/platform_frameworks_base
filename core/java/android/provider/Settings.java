@@ -5329,6 +5329,11 @@ public final class Settings {
          * @hide
          */
         public static final String LOCKSCREEN_MEDIA_METADATA = "lockscreen_media_metadata";
+        /**
+         * Whether to show heads up only for dialer and sms apps
+         * @hide
+         */
+        public static final String LESS_BORING_HEADS_UP = "less_boring_heads_up";
 
         /**
          * Keys we no longer back up under the current schema, but want to continue to
@@ -5507,6 +5512,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(NETWORK_TRAFFIC_LAYOUT);
             PRIVATE_SETTINGS.add(SCREEN_OFF_ANIMATION);
             PRIVATE_SETTINGS.add(LOCKSCREEN_MEDIA_METADATA);
+            PRIVATE_SETTINGS.add(LESS_BORING_HEADS_UP);
         }
 
         /**
