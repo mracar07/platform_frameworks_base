@@ -79,4 +79,9 @@
         android:title="@string/battery"
         android:summary="%s"
         android:entries="@array/battery_options" />
+
+        <com.android.systemui.tuner.TunerSwitch
+            android:key="volte"
+            android:title="@string/status_bar_volte"
+            sysui:defValue="false" />
 </PreferenceScreen>
