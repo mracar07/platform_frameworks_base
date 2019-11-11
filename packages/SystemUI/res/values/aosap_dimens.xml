@@ -42,4 +42,7 @@
     <dimen name="keyguard_charging_indication_height">60dp</dimen>
     <dimen name="keyguard_charging_indication_width">35dp</dimen>
 
+    <!-- Qs visibility -->
+    <dimen name="qs_tile_height_wo_label">64dp</dimen>
+
 </resources>
