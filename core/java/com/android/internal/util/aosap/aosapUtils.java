@@ -17,6 +17,7 @@
 package com.android.internal.util.aosap;
 
 import android.Manifest;
+import android.app.ActivityManagerNative;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
@@ -147,6 +148,8 @@ public class aosapUtils {
             pm.goToSleep(SystemClock.uptimeMillis());
         }
     }
+
+    // Method to toggle flashlight
     public static boolean deviceHasFlashlight(Context ctx) {
         return ctx.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH);
     }
@@ -173,6 +176,15 @@ public class aosapUtils {
                     // do nothing.
                 }
             }
+        }
+    }
+
+    // Method to check if task is in lock task mode
+    public static boolean isInLockTaskMode() {
+        try {
+            return ActivityManagerNative.getDefault().isInLockTaskMode();
+        } catch (RemoteException e) {
+            return false;
         }
     }
 }
