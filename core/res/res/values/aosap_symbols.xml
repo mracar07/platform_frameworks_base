@@ -112,4 +112,8 @@
     <!-- Whether to send camera status intent -->
     <java-symbol type="bool" name="config_sendCameraStatusIntent" />
 
+    <!-- Device has OnePlus haptic motor -->
+    <java-symbol type="bool" name="config_hasOnePlusHapticMotor" />
+
+
 </resources>
