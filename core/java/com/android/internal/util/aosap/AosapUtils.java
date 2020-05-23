@@ -28,6 +28,7 @@ import android.os.UserHandle;
 import android.provider.Settings;
 import android.view.IWindowManager;
 import android.view.WindowManagerGlobal;
+import android.text.format.Time;
 
 import com.android.internal.statusbar.IStatusBarService;
 
@@ -41,6 +42,15 @@ public class AosapUtils {
 
     public static final String INTENT_SCREENSHOT = "action_handler_screenshot";
     public static final String INTENT_REGION_SCREENSHOT = "action_handler_region_screenshot";
+
+	// Returns today's passed time in Millisecond
+    public static long getTodayMillis() {
+        final long passedMillis;
+        Time time = new Time();
+        time.set(System.currentTimeMillis());
+        passedMillis = ((time.hour * 60 * 60) + (time.minute * 60) + time.second) * 1000;
+        return passedMillis;
+    }
 
     public static void switchScreenOff(Context ctx) {
         PowerManager pm = (PowerManager) ctx.getSystemService(Context.POWER_SERVICE);
