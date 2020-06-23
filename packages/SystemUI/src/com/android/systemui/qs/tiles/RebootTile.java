@@ -20,45 +20,23 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.PowerManager;
-import android.os.RemoteException;
-import android.os.ServiceManager;
-import android.service.quicksettings.Tile;
-import com.android.systemui.R;
-import com.android.systemui.plugins.ActivityStarter;
-import com.android.systemui.qs.QSHost;
-import com.android.systemui.plugins.qs.QSTile.BooleanState;
-import com.android.systemui.qs.tileimpl.QSTileImpl;
+
+import com.android.internal.logging.MetricsLogger;
 import com.android.internal.logging.nano.MetricsProto.MetricsEvent;
-import com.android.internal.statusbar.IStatusBarService;
-import com.android.systemui.statusbar.policy.KeyguardStateController;
+import com.android.systemui.R;
+import com.android.systemui.plugins.qs.QSTile.BooleanState;
+import com.android.systemui.qs.QSHost;
+import com.android.systemui.qs.tileimpl.QSTileImpl;
 
 import javax.inject.Inject;
 
 public class RebootTile extends QSTileImpl<BooleanState> {
 
     private boolean mRebootToRecovery = false;
-    private IStatusBarService mBarService;
-
-    private final ActivityStarter mActivityStarter;
-    private final KeyguardStateController mKeyguard;
 
     @Inject
-    public RebootTile(QSHost host, ActivityStarter activityStarter, KeyguardStateController keyguardStateController) {
+    public RebootTile(QSHost host) {
         super(host);
-        mActivityStarter = activityStarter;
-        mKeyguard = keyguardStateController;
-        final KeyguardStateController.Callback callback = new KeyguardStateController.Callback() {
-            @Override
-            public void onKeyguardShowingChanged() {
-                refreshState();
-            }
-        };
-        mKeyguard.observe(this, callback);
-    }
-
-    @Override
-    public int getMetricsCategory() {
-        return MetricsEvent.AOSAP;
     }
 
     @Override
@@ -67,39 +45,22 @@ public class RebootTile extends QSTileImpl<BooleanState> {
     }
 
     @Override
-    protected void handleClick() {
+    public void handleClick() {
         mRebootToRecovery = !mRebootToRecovery;
         refreshState();
     }
 
-    private void handleLongClickInner() {
+    @Override
+    protected void handleLongClick() {
         mHost.collapsePanels();
-        mBarService = IStatusBarService.Stub.asInterface(
-                ServiceManager.getService(Context.STATUS_BAR_SERVICE));
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             public void run() {
-                try {
-                    if(mRebootToRecovery)
-                        mBarService.advancedReboot(PowerManager.REBOOT_RECOVERY);
-                    else
-                        mBarService.reboot(false);
-                } catch (RemoteException e) {
-                }
+                PowerManager pm =
+                    (PowerManager) mContext.getSystemService(Context.POWER_SERVICE);
+                pm.reboot(mRebootToRecovery ? "recovery" : "");
             }
         }, 500);
-    }
-
-    @Override
-    protected void handleLongClick() {
-        if (mKeyguard.isMethodSecure() && mKeyguard.isShowing()) {
-            mActivityStarter.postQSRunnableDismissingKeyguard(() -> {
-                mHost.openPanels();
-                handleLongClickInner();
-            });
-            return;
-        }
-        handleLongClickInner();
     }
 
     @Override
@@ -108,12 +69,13 @@ public class RebootTile extends QSTileImpl<BooleanState> {
     }
 
     @Override
-    public void handleSetListening(boolean listening) {
+    public CharSequence getTileLabel() {
+        return mContext.getString(R.string.quick_settings_reboot_label);
     }
 
     @Override
-    public CharSequence getTileLabel() {
-        return mContext.getString(R.string.quick_settings_reboot_label);
+    public int getMetricsCategory() {
+        return MetricsEvent.AOSAP;
     }
 
     @Override
@@ -121,13 +83,13 @@ public class RebootTile extends QSTileImpl<BooleanState> {
         if (mRebootToRecovery) {
             state.label = mContext.getString(R.string.quick_settings_reboot_recovery_label);
             state.icon = ResourceIcon.get(R.drawable.ic_qs_reboot_recovery);
-            state.contentDescription =  mContext.getString(
-                    R.string.quick_settings_reboot_recovery_label);
         } else {
             state.label = mContext.getString(R.string.quick_settings_reboot_label);
             state.icon = ResourceIcon.get(R.drawable.ic_qs_reboot);
-            state.contentDescription =  mContext.getString(
-                    R.string.quick_settings_reboot_label);
         }
+    }
+
+    @Override
+    public void handleSetListening(boolean listening) {
     }
 }
