@@ -116,4 +116,7 @@
     <!-- Default value for Ambiant Pulse light color -->
     <integer name="config_ambientNotificationDefaultColor">0xFF3980FF</integer>
 
+    <!-- Whether to show a custom view for FOD -->
+    <bool name="config_needCustomFODView">false</bool>
+
 </resources>

@@ -106,4 +106,7 @@
    <!-- Ambient notification light color -->
    <java-symbol type="integer" name="config_ambientNotificationDefaultColor" />
 
+   <!-- Whether to show a custom view for FOD -->
+   <java-symbol type="bool" name="config_needCustomFODView" />
+
 </resources>
