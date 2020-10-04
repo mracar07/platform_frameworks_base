@@ -6043,6 +6043,45 @@ public final class Settings {
             return isCallingPackageAllowedToWriteSettings(context, Process.myUid(),
                     context.getOpPackageName(), false);
         }
+
+
+        /*****************************
+         * AOSAP System Settings start
+         *****************************/
+
+        /**
+         Add aosap settings like e.g.
+         @hide
+         public static final String AOSAP_FOO_BAR_BALABALA = "foo_bar_balabala";
+        */
+
+
+        /***************************
+         * AOSAP System Settings end
+         ***************************/
+
+        /**
+         * SettingsBackupAgent will combine its list with this so we dont need
+         * to add new things into SettingsProvider SystemSettings
+         * @hide
+         */
+        public static final String[] AOSAP_SETTINGS_TO_BACKUP = {
+            // AOSAP_FOO_BAR_BALABALA
+        };
+
+        /**
+         * SettingsBackupAgent will combine its list with this so we dont need
+         * to add new things into SettingsProvider SystemSettingsValidators
+         * we cant use Validators interface so use a simple integer mapping
+         * BOOLEAN_VALIDATOR == 0
+         * ANY_INTEGER_VALIDATOR == 1
+         * ANY_STRING_VALIDATOR == 2
+         * @hide
+         */
+        public static final Map<String, Integer> AOSAP_SETTINGS_VALIDATORS = new ArrayMap<>();
+        static {
+            //AOSAP_SETTINGS_VALIDATORS.put(AOSAP_FOO_BAR_BALABALA, 1);
+        }
     }
 
     /**
