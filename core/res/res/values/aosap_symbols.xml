@@ -230,4 +230,7 @@
   <java-symbol type="bool" name="config_hasAlertSlider" />
   <java-symbol type="integer" name="config_alertSliderLocation" />
 
+  <!-- Whether to show a custom view for FOD -->
+  <java-symbol type="bool" name="config_needCustomFODView" />
+
 </resources>
