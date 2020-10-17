@@ -58,10 +58,13 @@ LOCAL_REQUIRED_MODULES := \
 	FontFakedesSourceOverlay \
 	FontHondaSourceOverlay \
 	FontHortensiaSourceOverlay \
+	FontKaiOverlay \
 	FontMinusmanSourceOverlay \
 	FontNovaSourceOverlay \
+	FontSamOverlay \
 	FontTaurusSourceOverlay \
 	FontTechnicalSourceOverlay \
+	FontVictorOverlay \
 	IconPackCircularAndroidOverlay \
 	IconPackCircularLauncherOverlay \
 	IconPackCircularSettingsOverlay \
