@@ -1071,8 +1071,6 @@ public class PhoneWindowManager implements WindowManagerPolicy {
 
         boolean gesturedServiceIntercepted = false;
         if (!blockInputs) {
-            GestureLauncherService gestureService = LocalServices.getService(
-                    GestureLauncherService.class);
             if (gestureService != null) {
                 gesturedServiceIntercepted = gestureService.interceptPowerKeyDown(event, interactive,
                         mTmpBoolean);
