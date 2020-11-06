@@ -3099,6 +3099,7 @@ public final class Settings {
             // At one time in System, then Global, but now back in Secure
             MOVED_TO_SECURE.add(Secure.INSTALL_NON_MARKET_APPS);
             MOVED_TO_SECURE.add(Secure.VOLUME_LINK_NOTIFICATION);
+            MOVED_TO_SECURE.add(Secure.LOCKSCREEN_VISUALIZER_ENABLED);
         }
 
         @UnsupportedAppUsage
@@ -9674,6 +9675,12 @@ public final class Settings {
          * @hide
          */
         public static final String POWER_MENU_HIDE_ON_SECURE = "power_menu_hide_on_secure";
+
+        /**
+         * Enable and disable Lockscreen visualizer
+         * @hide
+         */
+        public static final String LOCKSCREEN_VISUALIZER_ENABLED = "lockscreen_visualizer_enabled";
 
         /**
          * Keys we no longer back up under the current schema, but want to continue to
