@@ -1667,7 +1667,7 @@ class BluetoothManagerService extends IBluetoothManager.Stub {
             }
 
             mContext.enforceCallingOrSelfPermission(
-                   BLUETOOTH_PRIVILEGED_PERM, "Need BLUETOOTH PRIVILEGED permission");
+                   BLUETOOTH_PRIVILEGED, "Need BLUETOOTH PRIVILEGED permission");
         }
 
         try {

@@ -724,7 +724,7 @@ public class FingerprintService extends BiometricServiceBase {
                 }
 
                 final Fingerprint fp = new Fingerprint("", groupId, fingerId, deviceId);
-                FingerprintService.super.handleAuthenticated(authenticated, fp, token)
+                FingerprintService.super.handleAuthenticated(authenticated, fp, token);
                 if (mHasFod && fp.getBiometricId() != 0) {
                     try {
                         mStatusBarService.hideInDisplayFingerprintView();

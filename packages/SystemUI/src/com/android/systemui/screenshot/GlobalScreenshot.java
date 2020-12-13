@@ -98,6 +98,15 @@ import java.util.function.Consumer;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+import java.util.concurrent.Executor;
+import com.android.systemui.shared.system.TaskStackChangeListener;
+import com.android.systemui.dagger.qualifiers.UiBackground;
+import android.content.pm.ActivityInfo;
+import android.content.pm.PackageManager;
+import android.app.ActivityTaskManager;
+import com.android.systemui.shared.system.ActivityManagerWrapper;
+
+
 /**
  * Class for handling device screen shots
  */
@@ -112,6 +121,8 @@ public class GlobalScreenshot implements ViewTreeObserver.OnComputeInternalInset
         public Consumer<Uri> finisher;
         public GlobalScreenshot.ActionsReadyListener mActionsReadyListener;
         public int errorMsgResId;
+        public String appLabel;
+
         void clearImage() {
             image = null;
         }
@@ -241,12 +252,40 @@ public class GlobalScreenshot implements ViewTreeObserver.OnComputeInternalInset
         }
     };
 
+    private ComponentName mTaskComponentName;
+    private PackageManager mPm;
+
+    private final Executor mUiBgExecutor;
+    private final TaskStackChangeListener mTaskListener = new TaskStackChangeListener() {
+        @Override
+        public void onTaskStackChanged() {
+            mUiBgExecutor.execute(() -> {
+                try {
+                    final ActivityManager.StackInfo focusedStack =
+                            ActivityTaskManager.getService().getFocusedStackInfo();
+                    if (focusedStack != null && focusedStack.topActivity != null) {
+                        mTaskComponentName = focusedStack.topActivity;
+                    }
+                } catch (Exception e) {}
+            });
+        }
+    };
+
+    private String getForegroundAppLabel() {
+        try {
+            final ActivityInfo ai = mPm.getActivityInfo(mTaskComponentName, 0);
+            return ai.applicationInfo.loadLabel(mPm).toString();
+        } catch (PackageManager.NameNotFoundException e) {
+             return null;
+        }
+    }
+
     @Inject
     public GlobalScreenshot(
             Context context, @Main Resources resources,
             ScreenshotSmartActions screenshotSmartActions,
             ScreenshotNotificationsController screenshotNotificationsController,
-            UiEventLogger uiEventLogger) {
+            UiEventLogger uiEventLogger, @UiBackground Executor uiBgExecutor) {
         mContext = context;
         mScreenshotSmartActions = screenshotSmartActions;
         mNotificationsController = screenshotNotificationsController;
@@ -286,6 +325,19 @@ public class GlobalScreenshot implements ViewTreeObserver.OnComputeInternalInset
         // Setup the Screenshot sound
         mScreenshotSound= RingtoneManager.getRingtone(mContext,
                     Uri.parse("file://" + "/system/media/audio/ui/camera_click.ogg"));
+
+        // Store UI background executor
+        mUiBgExecutor = uiBgExecutor;
+
+        // Grab PackageManager
+        mPm = mContext.getPackageManager();
+
+        // Register task stack listener
+        ActivityManagerWrapper.getInstance().registerTaskStackListener(mTaskListener);
+
+        // Initialize current foreground package name
+        mTaskListener.onTaskStackChanged();
+
     }
 
     @Override // ViewTreeObserver.OnComputeInternalInsetsListener
@@ -733,6 +785,7 @@ public class GlobalScreenshot implements ViewTreeObserver.OnComputeInternalInset
         data.image = mScreenBitmap;
         data.finisher = finisher;
         data.mActionsReadyListener = actionsReadyListener;
+        data.appLabel = getForegroundAppLabel();
 
         if (mSaveInBgTask != null) {
             // just log success/failure for the pre-existing screenshot

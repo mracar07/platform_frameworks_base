@@ -144,12 +144,13 @@ public class FaceService extends BiometricServiceBase {
             mHandler.post(new Runnable() {
                 @Override
                 public final void run() {
-                    Face face = new Face("", faceId, MOTO_DEVICE_ID);
+                    final Face face = new Face("", faceId, MOTO_DEVICE_ID);
+                    final boolean authenticated = faceId != 0;
                     ArrayList<Byte> token_AL = new ArrayList<>(token.length);
                     for (byte b : token) {
                         token_AL.add(new Byte(b));
                     }
-                    FaceService.super.handleAuthenticated(face, token_AL);
+                    FaceService.super.handleAuthenticated(authenticated, face, token_AL);
                 }
             });
         }
